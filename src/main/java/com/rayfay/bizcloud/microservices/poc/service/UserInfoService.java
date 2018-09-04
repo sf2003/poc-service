@@ -16,7 +16,9 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("userService")
@@ -96,17 +98,17 @@ public class UserInfoService {
                 if (searchCondition != null) {
                     if (StringUtils.isNotEmpty(searchCondition.getName())) {
                         predicates.add(
-                                criteriaBuilder.like(criteriaBuilder.upper(root.get("name")),
+                                criteriaBuilder.like(root.get("name"),
                                         "%" + searchCondition.getName() + "%"));
                     }
                     if (0 != searchCondition.getSex()) {
                         predicates.add(criteriaBuilder.equal(root.get("sex"), searchCondition.getSex()));
                     }
                     if (0 != searchCondition.getStartBirthday()) {
-                        predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("birthday"), searchCondition.getStartBirthday()));
+                        predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("birthday"), new Timestamp(searchCondition.getStartBirthday())));
                     }
                     if (0 != searchCondition.getEndBirthday()) {
-                        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("birthday"), searchCondition.getEndBirthday()));
+                        predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("birthday"), new Timestamp(searchCondition.getEndBirthday())));
                     }
                 }
                 return criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()])).getRestriction();

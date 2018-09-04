@@ -178,19 +178,8 @@ public class UserInfoController {
             sexType.put(2, "女");
             Page<UserInfo> result = userInfoService.findUserPageable(pageSize, pageNumber,
                     searchCondition, sorts);
-            responseMap = ResponseUtil.makeSuccessResponse(result.getTotalElements(), result.getContent());
-            if (searchCondition.getStartBirthday() != 0) {
-                responseMap.put("birthdayTimeStartStr", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(searchCondition.getStartBirthday())));
-            }
-            if (searchCondition.getEndBirthday() != 0) {
-                responseMap.put("birthdayTimeEndStr", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(searchCondition.getEndBirthday())));
-            }
             List<Map<String, Object>> rows = toLogMapList(result.getContent(), sexType);
-            responseMap.put("success", true);
-            Map<String, Object> resultMap = new HashMap<>();
-            resultMap.put("rows", rows);
-            resultMap.put("totalNum", result.getTotalElements());
-            responseMap.put("result", resultMap);
+            responseMap = ResponseUtil.makeSuccessResponse(result.getTotalElements(), rows);
         } catch (NRAPException e) {
             throw e;
         } catch (Exception e) {
@@ -209,7 +198,7 @@ public class UserInfoController {
             returnMap.put("sex", sexType.get(one.getSex()));
             returnMap.put("name", one.getName());
             returnMap.put("email", one.getEmail());
-            SimpleDateFormat timeFormater = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat timeFormater = new SimpleDateFormat("yyyy-MM-dd");
             if(null != one.getBirthday())
                 returnMap.put("birthday", timeFormater.format(one.getBirthday()));
 

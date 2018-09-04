@@ -14,7 +14,7 @@ public class UserSearchCondition {
     /*
      * 性别
      */
-    private Integer sex;
+    private int sex;
 
     /*
      * 生日start
