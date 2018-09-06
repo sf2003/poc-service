@@ -209,17 +209,20 @@ public class UserInfoController {
 
     private UserInfo ConventToUserInfo(JSONObject userJson) {
         UserInfo user = new UserInfo();
-        if (StringUtils.isNotEmpty(userJson.getString("sex")))
+        if (StringUtils.isNotEmpty(userJson.getString("sex"))) {
             user.setSex(Integer.parseInt(userJson.getString("sex")));
+        }
         user.setName(userJson.getString("name"));
         user.setEmail(userJson.getString("email"));
-        user.setUserId(0l);
-        if (StringUtils.isNotEmpty(userJson.getString("userId")))
+        user.setUserId(0L);
+        if (StringUtils.isNotEmpty(userJson.getString("userId"))) {
             user.setUserId(Long.parseLong(userJson.getString("userId")));
+        }
         SimpleDateFormat timeFormater = new SimpleDateFormat("yyyy-MM-dd");
         try {
-            if (StringUtils.isNotEmpty(userJson.getString("birthday")))
+            if (StringUtils.isNotEmpty(userJson.getString("birthday"))) {
                 user.setBirthday(timeFormater.parse(userJson.getString("birthday")));
+            }
         }catch(Exception ex){
             throw new NRAPException(UserErrorCodeType.E_DATE_FORMAT);
         }
