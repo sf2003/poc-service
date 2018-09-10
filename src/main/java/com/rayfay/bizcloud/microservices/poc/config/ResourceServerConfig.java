@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
-//        http.authorizeRequests().antMatchers("/v2/**", "/swagger**", "/images/**", "/configuration/**").permitAll();
+        http.authorizeRequests().antMatchers("/v2/**", "/swagger**", "/images/**", "/configuration/**").permitAll();
 //        http.antMatcher("/**").authorizeRequests().anyRequest().authenticated();
     }
 }
